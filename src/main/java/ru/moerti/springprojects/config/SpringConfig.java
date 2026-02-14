@@ -13,8 +13,9 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
-@ComponentScan("ru.moerti.springprojects")
+@ComponentScan("ru.moerti.springprojects") //Ищит все классы с аннотациями @Component, @Service, @Repository, @Controller в указанном пакете и создавай из них бины
 @EnableWebMvc
+//класс заменяет XML-конфигурацию applicationContext.xml
 public class SpringConfig implements WebMvcConfigurer {
 
 private final ApplicationContext applicationContext;
@@ -25,6 +26,7 @@ private final ApplicationContext applicationContext;
     }
 
     @Bean
+    //Создает компонент, который знает, где лежат HTML-файлы и как они называются.
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
@@ -34,6 +36,8 @@ private final ApplicationContext applicationContext;
     }
 
     @Bean
+    //Создаёт движок шаблонов — ядро Thymeleaf. Он связывает резольвер с самим движком
+    // и включает компилятор выражений (чтобы работали конструкции типа ${user.name})
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
@@ -42,6 +46,7 @@ private final ApplicationContext applicationContext;
     }
 
     @Override
+    //Регистрирует ThymeleafViewResolver
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
