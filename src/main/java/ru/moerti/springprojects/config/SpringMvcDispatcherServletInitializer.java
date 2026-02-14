@@ -1,6 +1,7 @@
 package ru.moerti.springprojects.config;
 
 import jakarta.servlet.Filter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import jakarta.servlet.ServletContext; //Для новых версий Spring
@@ -30,7 +31,13 @@ public class SpringMvcDispatcherServletInitializer
 
     @Override
     protected Filter[] getServletFilters() {
-        // Регистрируем фильтр для поддержки PUT/DELETE в HTML формах
-        return new Filter[]{new HiddenHttpMethodFilter()};
+        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+        encodingFilter.setEncoding("UTF-8"); // Используй UTF-8 для всех запросов и ответов
+        encodingFilter.setForceEncoding(true); // заставляет применить UTF-8, даже если в запросе указана другая кодировка
+
+        return new Filter[] {
+                encodingFilter,
+                new HiddenHttpMethodFilter()
+        };
     }
 }
