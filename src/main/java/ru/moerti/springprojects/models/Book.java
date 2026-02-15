@@ -10,7 +10,7 @@ public class Book {
     private int id;
 
     @NotEmpty(message = "Title should not be empty")
-    @Size(min = 1, max = 50, message = "Title should between 1 and 50 characters")
+    @Size(min = 1, max = 127, message = "Title should between 1 and 50 characters")
     private String title;
 
     @NotEmpty(message = "Author should not be empty")
