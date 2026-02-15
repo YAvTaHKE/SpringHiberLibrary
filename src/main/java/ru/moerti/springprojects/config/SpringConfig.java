@@ -40,8 +40,10 @@ private final Environment environment;
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("WEB-INF/views/");
+        templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");  // ОЧЕНЬ ВАЖНО!
+        templateResolver.setCharacterEncoding("UTF-8");  // Рекомендуется
         return templateResolver;
     }
 
