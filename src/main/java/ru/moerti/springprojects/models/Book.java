@@ -22,6 +22,10 @@ public class Book {
     @Max(value = 2100, message = "Year should be less than 2100")
     private int year;
 
+    public Book(){
+        // Пустой конструктор необходим для BeanPropertyRowMapper
+    }
+
     public Book(int id, String title, int year) {
         this.id = id;
         this.title = title;

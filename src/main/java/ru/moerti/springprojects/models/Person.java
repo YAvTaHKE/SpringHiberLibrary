@@ -13,7 +13,6 @@ public class Person {
     @Size(min = 1, max = 127, message = "Name should between 2 and 30 characters")
     private String fullName;
 
-    @NotEmpty(message = "Year of birthday should not be empty")
     @Min(value = 1, message = "Age should be greater than 0")
     @Max(value = 2100, message = "Age should be less than 2100")
     private int yearOfBirth;
