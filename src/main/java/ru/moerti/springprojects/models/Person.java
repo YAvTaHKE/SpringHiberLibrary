@@ -18,6 +18,10 @@ public class Person {
     @Max(value = 2100, message = "Age should be less than 2100")
     private int yearOfBirth;
 
+    public Person(){
+        // Пустой конструктор необходим для BeanPropertyRowMapper
+    }
+
     public Person(int id, String fullName, int yearOfBirth) {
         this.id = id;
         this.fullName = fullName;
