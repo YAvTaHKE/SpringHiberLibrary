@@ -10,7 +10,7 @@ public class Person {
     private int PersonId;
 
     @NotEmpty(message = "Name not should be empty")
-    @Size(min = 1, max = 127, message = "Name should between 2 and 30 characters")
+    @Size(min = 1, max = 127, message = "Name should between 1 and 127 characters")
     private String fullName;
 
     @Min(value = 1, message = "Age should be greater than 0")
@@ -21,8 +21,8 @@ public class Person {
         // Пустой конструктор необходим для BeanPropertyRowMapper
     }
 
-    public Person(int id, String fullName, int yearOfBirth) {
-        this.PersonId = id;
+    public Person(int personId, String fullName, int yearOfBirth) {
+        this.PersonId = personId;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }

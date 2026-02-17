@@ -7,18 +7,18 @@ import jakarta.validation.constraints.Size;
 
 public class Book {
 
-    private int id;
+    private int bookId;
 
     @NotEmpty(message = "Title should not be empty")
-    @Size(min = 1, max = 127, message = "Title should between 1 and 50 characters")
+    @Size(min = 1, max = 127, message = "Title should between 1 and 127 characters")
     private String title;
 
     @NotEmpty(message = "Author should not be empty")
     @Size(min = 1, max = 127, message = "Author name should between 1 and 127 characters")
     private String author;
 
-    @NotEmpty(message = "Year should not be empty")
-    @Min(value = 0, message = "Year should be greater than 0")
+
+    @Min(value = 1, message = "Year should be greater than 0")
     @Max(value = 2100, message = "Year should be less than 2100")
     private int year;
 
@@ -26,18 +26,18 @@ public class Book {
         // Пустой конструктор необходим для BeanPropertyRowMapper
     }
 
-    public Book(int id, String title, int year) {
-        this.id = id;
+    public Book(int bookId, String title, int year) {
+        this.bookId = bookId;
         this.title = title;
         this.year = year;
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {
@@ -67,7 +67,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + bookId +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", year=" + year +
