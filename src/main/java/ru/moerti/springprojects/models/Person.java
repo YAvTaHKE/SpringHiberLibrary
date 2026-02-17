@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class Person {
 
-    private int id;
+    private int PersonId;
 
     @NotEmpty(message = "Name not should be empty")
     @Size(min = 1, max = 127, message = "Name should between 2 and 30 characters")
@@ -22,17 +22,17 @@ public class Person {
     }
 
     public Person(int id, String fullName, int yearOfBirth) {
-        this.id = id;
+        this.PersonId = id;
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }
 
-    public int getId() {
-        return id;
+    public int getPersonId() {
+        return PersonId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonId(int personId) {
+        this.PersonId = personId;
     }
 
     public String getFullName() {
@@ -54,7 +54,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
+                "id=" + PersonId +
                 ", fullName='" + fullName + '\'' +
                 ", yearOfBirth=" + yearOfBirth +
                 '}';
