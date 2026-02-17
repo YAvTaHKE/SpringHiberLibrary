@@ -3,12 +3,12 @@
     <title>Show book</title>
 </head>
 <body>
-<p th:text="${person.fullName + ', ' + person.yearOfBirth}">John Doe, 1990</p>
-<p th:text="${person.personId}">1</p>
+<p th:text="${book.title + ', ' + book.author + ', ' + book.year}">Kukaracha</p>
+<p th:text="${book.bookId}">1</p>
 
-<a th:href="@{/people/{id}/edit(id=${person.personId})}">Edit</a>
+<a th:href="@{/books/{id}/edit(id=${book.bookId})}">Edit</a>
 
-<form th:method="POST" th:action="@{/people/{id}(id=${person.personId})}">
+<form th:method="POST" th:action="@{/books/{id}(id=${book.bookId})}">
     <input type="hidden" name="_method" value="DELETE" />
     <input type="submit" value="Delete"/>
 </form>

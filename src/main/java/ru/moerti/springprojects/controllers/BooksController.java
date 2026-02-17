@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.moerti.springprojects.dao.BookDAO;
 import ru.moerti.springprojects.models.Book;
-import ru.moerti.springprojects.models.Person;
 
 @Controller
 @RequestMapping("/books")
@@ -30,12 +29,17 @@ public class BooksController {
     }
 
     @GetMapping("/new")
-    public String newBook (@ModelAttribute("book") Book book){
+    public String newBook (Model model){
+        model.addAttribute("book", new Book());
         return "books/new";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("book") @Valid Book book) {
+    public String create(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors())
+            return "books/new";
+
         bookDAO.save(book);
         return "redirect:/books";
 
@@ -44,20 +48,20 @@ public class BooksController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("book", bookDAO.show(id));
-        return "people/show";
+        return "books/show";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("book", bookDAO.show(id));
-        return "book/edit";
+        return "books/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") @Valid Book book, BindingResult bindingResult,
+    public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
                          @PathVariable("id") int id) {
         if (bindingResult.hasErrors())
-            return "book/edit";
+            return "books/edit";
 
         bookDAO.update(id, book);
         return "redirect:/books";
