@@ -8,13 +8,13 @@
 
 <div th:each="person : ${people}">
     <a th:href="@{/people/{id}(id=${person.personId})}"
-       th:text="${person.fullName + ', ' + person.YearOfBirth + ', id=' + person.personId}">user</a>
+       th:text="${person.fullName + ', ' + person.YearOfBirth}">user</a>
 </div>
 
 <br/>
 <hr/>
 
-<a href="/people/new">Create new person</a>
+<a href="/people/new">Добавить человека</a>
 
 </body>
 </html>

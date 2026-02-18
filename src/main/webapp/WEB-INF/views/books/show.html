@@ -6,7 +6,9 @@
 <p th:text="${book.title + ', ' + book.author + ', ' + book.year}">Kukaracha</p>
 <p th:text="${book.bookId}">1</p>
 
-<a th:href="@{/books/{id}/edit(id=${book.bookId})}">Edit</a>
+<a th:href="@{/books/{id}/edit(id=${book.bookId})}">
+    <button type="button">Редактировать</button>
+</a>
 
 <form th:method="POST" th:action="@{/books/{id}(id=${book.bookId})}">
     <input type="hidden" name="_method" value="DELETE" />
