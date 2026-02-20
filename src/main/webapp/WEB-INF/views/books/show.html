@@ -1,18 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Show book</title>
 </head>
 <body>
-<p th:text="${book.title + ', ' + book.author + ', ' + book.year}">Kukaracha</p>
-<p th:text="${book.bookId}">1</p>
+<h2>Информация о книге</h2>
 
+<p th:text="${book.title + ', ' + book.author + ', ' + book.year}">Kukaracha</p>
+
+<!-- Информация о том, у кого книга -->
+<div th:if="${person != null}">
+    <p th:text="'Книга сейчас у: ' + ${person.fullName}">person</p>
+    <br/>
+
+    <form th:method="POST" th:action="@{/books/{id}/free(id=${book.bookId})}">
+        <input type="hidden" name="_method" value="PATCH"/>
+        <button type="submit" onclick="return confirm('Освободить книгу?')">
+            Освободить книгу
+        </button>
+    </form>
+
+</div>
+
+<div th:if="${person == null}" style="color: gray; font-style: italic;">
+    <p>Эта книга свободна. Кому назначить её?</p>
+
+<!-- Форма назначения книги -->
+<form th:action="@{/books/assign}" method="post">
+    <!-- Передаём ID книги -->
+    <input type="hidden" name="bookId" th:value="${book.bookId}"/>
+
+    <label for="personId">Выберите человека:</label>
+    <select name="personId" id="personId" required>
+        <option value="">-- Выберите из списка --</option>
+        <option th:each="p : ${personList}"
+                th:value="${p.personId}"
+                th:text="${p.fullName + ' (' + p.yearOfBirth + ')'}">
+        </option>
+    </select>
+
+    <button type="submit">Назначить</button>
+    <a th:href="@{/books}">Отмена</a>
+</form>
+</div>
+
+<hr/>
+
+<!-- Кнопка редактирования -->
 <a th:href="@{/books/{id}/edit(id=${book.bookId})}">
     <button type="button">Редактировать</button>
 </a>
 
-<form th:method="POST" th:action="@{/books/{id}(id=${book.bookId})}">
+<!-- Форма удаления -->
+<form th:method="POST"
+      th:action="@{/books/{id}(id=${book.bookId})}"
+      style="display: inline;">
     <input type="hidden" name="_method" value="DELETE" />
-    <input type="submit" value="Delete"/>
+    <input type="submit" value="Удалить" onclick="return confirm('Удалить книгу?')"/>
 </form>
+
+<br/><br/>
+<a th:href="@{/books}">Назад к списку книг</a>
 </body>
 </html>
