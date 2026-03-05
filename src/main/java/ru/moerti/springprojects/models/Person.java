@@ -5,24 +5,39 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "person")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_id_seq")
+    @SequenceGenerator(name = "person_id_seq", sequenceName = "person_person_id_seq", allocationSize = 1)
+    @Column(name = "person_id")
     private int PersonId;
 
+    @Column(name = "full_name")
     @NotEmpty(message = "Name not should be empty")
     @Size(min = 1, max = 127, message = "Name should between 2 and 30 characters")
     private String fullName;
 
+    @Column(name = "year_of_birth")
     @Min(value = 1, message = "Age should be greater than 0")
     @Max(value = 2100, message = "Age should be less than 2100")
     private int yearOfBirth;
+
+    @OneToMany (mappedBy = "person")
+
+    private List<Book> personBookList;
 
     public Person(){
         // Пустой конструктор необходим для BeanPropertyRowMapper
     }
 
-    public Person(int id, String fullName, int yearOfBirth) {
-        this.PersonId = id;
+    public Person(String fullName, int yearOfBirth) {
         this.fullName = fullName;
         this.yearOfBirth = yearOfBirth;
     }
@@ -49,6 +64,14 @@ public class Person {
 
     public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
+    }
+
+    public List<Book> getPersonBookList(){
+        return this.personBookList;
+    }
+
+    public void setPersonBookList(List<Book> personBookList) {
+        this.personBookList = personBookList;
     }
 
     @Override
