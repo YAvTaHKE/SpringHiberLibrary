@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -74,17 +75,13 @@ public class SpringConfig implements WebMvcConfigurer {
 
     @Bean
     public DataSource dataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName(environment.getRequiredProperty("hibernate.driver_class"));
-        config.setJdbcUrl(environment.getRequiredProperty("hibernate.connection.url"));
-        config.setUsername(environment.getRequiredProperty("hibernate.connection.username"));
-        config.setPassword(environment.getRequiredProperty("hibernate.connection.password")); // Исправлено
-
-        config.setMaximumPoolSize(20);
-        config.setMinimumIdle(5);
-        config.setConnectionTimeout(30000);
-
-        return new HikariDataSource(config);
+        // Простой DataSource без пула соединений
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(environment.getRequiredProperty("hibernate.driver_class"));
+        dataSource.setUrl(environment.getRequiredProperty("hibernate.connection.url"));
+        dataSource.setUsername(environment.getRequiredProperty("hibernate.connection.username"));
+        dataSource.setPassword(environment.getRequiredProperty("hibernate.connection.password"));
+        return dataSource;
     }
 
     @Bean
@@ -120,7 +117,7 @@ public class SpringConfig implements WebMvcConfigurer {
 
         emf.setDataSource(dataSource);
         // Укажите правильный пакет для ваших entity-классов
-        emf.setPackagesToScan("ru.moerti.springprojects.entity");
+        emf.setPackagesToScan("ru.moerti.springprojects.models");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(true); // будет переопределено свойствами

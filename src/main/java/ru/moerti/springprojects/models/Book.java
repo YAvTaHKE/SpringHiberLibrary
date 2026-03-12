@@ -12,9 +12,7 @@ import jakarta.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_id_seq")
-    //альтернатива автогенерации @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "book_id_seq", sequenceName = "book_book_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
     private int id;
 
