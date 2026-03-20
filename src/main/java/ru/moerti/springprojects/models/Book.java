@@ -1,9 +1,6 @@
 package ru.moerti.springprojects.models;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import jakarta.persistence.*;
 
@@ -14,7 +11,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
-    private int id;
+    private int bookId;
 
     @Column(name = "title")
     @NotEmpty(message = "Title should not be empty")
@@ -27,7 +24,7 @@ public class Book {
     private String author;
 
     @Column(name = "year")
-    @NotEmpty(message = "Year should not be empty")
+    @NotNull(message = "Year should not be empty")
     @Min(value = 0, message = "Year should be greater than 0")
     @Max(value = 2100, message = "Year should be less than 2100")
     private int year;
@@ -45,12 +42,12 @@ public class Book {
         this.year = year;
     }
 
-    public int getId() {
-        return id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBookId(int id) {
+        this.bookId = id;
     }
 
     public String getTitle() {
@@ -88,7 +85,7 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id=" + bookId +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", year=" + year + '\'' +

@@ -8,6 +8,8 @@ import org.springframework.validation.Validator;
 import ru.moerti.springprojects.dao.PersonDAO;
 import ru.moerti.springprojects.models.Person;
 
+import java.util.List;
+
 @Component
 public class PersonValidator implements Validator {
 
@@ -27,14 +29,14 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
 
-        /*if (personDAO.show(person.getEmail()).isPresent()) {
+        if (personDAO.show(person.getPersonId()) != null) {
             // поле, код ошибки, сообщение ошибки
-            errors.rejectValue("email", "", "This email is already in use");
-        }*/
+            errors.rejectValue("fullName", "", "This name is already in use");
+        }
 
         // Проверяем, что у человека имя начинается с заглавной буквы
         // Если имя не начинается с заглавной буквы - выдаем ошибку
-        /*if (!Character.isUpperCase(person.getName().codePointAt(0)))
+        /*if (!Character.isUpperCase(person.getFullName().codePointAt(0)))
             errors.rejectValue("name", "", "Name should start with a capital letter");*/
 
     }

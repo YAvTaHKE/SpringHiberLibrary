@@ -28,8 +28,7 @@ public class Person {
     @Max(value = 2100, message = "Age should be less than 2100")
     private int yearOfBirth;
 
-    @OneToMany (mappedBy = "person")
-
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Book> personBookList;
 
     public Person(){
@@ -73,6 +72,15 @@ public class Person {
         this.personBookList = personBookList;
     }
 
+    public void addBook(Book book) {
+        personBookList.add(book);
+        book.setPerson(this);
+    }
+
+    public void removeBook(Book book) {
+        personBookList.remove(book);
+        book.setPerson(null);
+    }
     @Override
     public String toString() {
         return "Person{" +
